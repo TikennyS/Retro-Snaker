@@ -1,5 +1,11 @@
 var c=document.getElementById("myCanvas")
 var cxt=c.getContext("2d");
+
+var up=document.getElementById("1")
+var down=document.getElementById("2")
+var left=document.getElementById("3")
+var right=document.getElementById("4")
+
 var x=Math.random()*400;
 var y=Math.random()*400;
 var time= 200;  //初始200ms移动一次
@@ -35,5 +41,15 @@ function move_snake(){
    cxt.fillStyle = "#000000";
    cxt.strokeStyle = "#000000";
    cxt.fillRect(x, y, size, size);
+   
+   up.addEventListener("click", function() {
+    direction=1;});
+   down.addEventListener("click", function() {
+    direction=2;});
+   left.addEventListener("click", function() {
+    direction=3;});
+   right.addEventListener("click", function() {
+    direction=4;});
+
 }
 interval = window.setInterval(move_snake, time); 
