@@ -60,4 +60,11 @@ function move_snake(){
     direction=4;});
 
 }
+function randomfood(){
+    var food=Math.ceil(Math.random()*400);
+    cxt.fillStyle = "#000000";
+    cxt.strokeStyle = "#000000";
+    cxt.fillRect(food,food,8,8);
+}
+randomfood();
 interval = window.setInterval(move_snake, time); 
