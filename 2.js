@@ -9,7 +9,10 @@ var right=document.getElementById("4")
 var x=Math.ceil(Math.random()*30);
 var y=Math.ceil(Math.random()*40);
 var time= 200;  //初始200ms移动一次
+
 var food;       //食物坐标
+var obstacle;   //障碍物坐标
+
 var size=8;
 var length=10;  //初始长度
 var direction=Math.ceil(Math.random()*4);    //方向   1234，上下左右
@@ -62,18 +65,27 @@ function move_snake(){
    right.addEventListener("click", function() {
     direction=4;});
 
+   if((food*8)==x&&(food*8)==y){
+       randomfood();
+       length++;
+   }
+   if(Math.abs(obstacle*8-x)<24&&Math.abs(obstacle*8-y)<24){
+       randomobstacle();
+       alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/time)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+       window.location.reload();
+   }
+
 }
 function randomfood(){
-    var food=Math.ceil(Math.random()*50);
+    food=Math.ceil(Math.random()*50);
     cxt.fillStyle = "#000000";
     cxt.strokeStyle = "#000000";
     cxt.fillRect(food*8,food*8,8,8);
 }
 function randomobstacle(){
-    var obstacle=Math.ceil(Math.random()*400);
-    //cxt.fillStyle = "#006699";
+    obstacle=Math.ceil(Math.random()*50);
     cxt.strokeStyle = "#000000";
-    cxt.strokeRect(obstacle,obstacle,30,30);
+    cxt.strokeRect(obstacle*8,obstacle*8,24,24);
 }
 randomfood();
 randomobstacle();
