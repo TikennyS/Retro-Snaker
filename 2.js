@@ -6,8 +6,8 @@ var down=document.getElementById("2")
 var left=document.getElementById("3")
 var right=document.getElementById("4")
 
-var x=Math.random()*300;
-var y=Math.random()*300;
+var x=Math.ceil(Math.random()*30);
+var y=Math.ceil(Math.random()*40);
 var time= 200;  //初始200ms移动一次
 var food;       //食物坐标
 var size=8;
@@ -17,6 +17,9 @@ var map=[];     //运动轨迹
 
 var storage=window.localStorage;
 storage['1']=5;
+
+x=x*8;
+y=y*8;
 
 //x=500;
 function move_snake(){
@@ -61,10 +64,17 @@ function move_snake(){
 
 }
 function randomfood(){
-    var food=Math.ceil(Math.random()*400);
+    var food=Math.ceil(Math.random()*50);
     cxt.fillStyle = "#000000";
     cxt.strokeStyle = "#000000";
-    cxt.fillRect(food,food,8,8);
+    cxt.fillRect(food*8,food*8,8,8);
+}
+function randomobstacle(){
+    var obstacle=Math.ceil(Math.random()*400);
+    //cxt.fillStyle = "#006699";
+    cxt.strokeStyle = "#000000";
+    cxt.strokeRect(obstacle,obstacle,30,30);
 }
 randomfood();
+randomobstacle();
 interval = window.setInterval(move_snake, time); 
