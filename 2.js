@@ -19,7 +19,7 @@ var direction=Math.ceil(Math.random()*4);    //方向   1234，上下左右
 var map=[];     //运动轨迹
 
 var storage=window.localStorage;
-storage['1']=5;
+storage['1'];
 
 x=x*8;
 y=y*8;
@@ -34,16 +34,16 @@ function move_snake(){
     }
     if(x>408 || x<0 || y<0 || y>408){
         if((1000/time)>storage['1']){
-            storage['1']=(1000/time);
+            storage['1']=(1000/time).toFixed(2);
         }
-        alert("GameOver!碰壁了!"+"当前速度："+(1000/time)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+        alert("GameOver!碰壁了!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
         window.location.reload();
     }
    for(var i=0;i<map.length;i++){
        if(map[i].x==x&&map[i].y==y){
             if((1000/time)>storage['1'])
              storage['1']=(1000/time);
-            alert("GameOver!撞到自己!"+"当前速度："+(1000/time)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+            alert("GameOver!撞到自己!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
             window.location.reload();
        }
    }
@@ -67,11 +67,12 @@ function move_snake(){
 
    if((food*8)==x&&(food*8)==y){
        randomfood();
+       time=time-5;
        length++;
    }
    if(Math.abs(obstacle*8-x)<24&&Math.abs(obstacle*8-y)<24){
        randomobstacle();
-       alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/time)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+       alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
        window.location.reload();
    }
 
