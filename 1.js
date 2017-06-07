@@ -3,6 +3,7 @@ var up = document.getElementById("up");
 var left = document.getElementById("left");
 var down = document.getElementById("down");
 var right = document.getElementById("right");
+var totaletime = document.getElementById("total_time");
 var time = 200 ; //蛇的速度 
 var cxt=c.getContext("2d"); 
 var t = 20; //蛇身长 
@@ -11,6 +12,8 @@ var size = 8; //蛇身单元大小
 var x = y = 8;
 var direction = 4;
 var food_state = false;
+var total_time = 60; //倒计时
+
 
 interval = window.setInterval(set_game_speed, time); // 移动蛇 
 
@@ -31,6 +34,10 @@ function set_game_speed(){ // 移动蛇
             window.location.reload(); 
         } 
     } 
+    if(total_time<0){
+        alert("时间到了，你输了！");
+        window.location.reload();
+    }
     if (map.length>t) { //保持蛇身长度 
         var cl = map.shift(); //删除数组第一项，并且返回原元素 
         cxt.clearRect(cl.x, cl.y, size+1, size+1); 
@@ -66,3 +73,10 @@ function rand_frog(){ //随机出现食物
     }
 }
 rand_frog();
+
+function timeout(){
+    document.getElementById("total_time").innerHTML = "时间为" + total_time + "s";
+    total_time = total_time-1;
+    setTimeout("timeout();",1000);
+}
+timeout();
