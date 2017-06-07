@@ -10,7 +10,8 @@ var map = []; //记录蛇运行路径
 var size = 8; //蛇身单元大小 
 var x = y = 8;
 var direction = 4;
-var one = 1;
+var food_state = false;
+
 interval = window.setInterval(set_game_speed, time); // 移动蛇 
 
 function set_game_speed(){ // 移动蛇 
@@ -52,8 +53,16 @@ function set_game_speed(){ // 移动蛇
 
 function rand_frog(){ //随机出现食物
     a = Math.ceil(Math.random()*50);
-    cxt.fillStyle = "#000000";
-    cxt.strokeStyle = "#000000";
-    cxt.fillRect(a*8,a*8,size,size);
+    if(a%3==0){
+        cxt.fillStyle = "#FF0000";
+        cxt.strokeStyle = "#FF0000";
+        cxt.fillRect(a*8,a*8,size,size);
+        food_state = true;
+    }
+    else{
+        cxt.fillStyle = "#000000";
+        cxt.strokeStyle = "#000000";
+        cxt.fillRect(a*8,a*8,size,size);
+    }
 }
 rand_frog();
