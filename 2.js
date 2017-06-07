@@ -5,10 +5,10 @@ var up=document.getElementById("1")
 var down=document.getElementById("2")
 var left=document.getElementById("3")
 var right=document.getElementById("4")
+var buttonA=document.getElementById("5")
 
 var x=Math.ceil(Math.random()*30);
 var y=Math.ceil(Math.random()*40);
-var time= 200;  //初始200ms移动一次
 
 var food;       //食物坐标
 var obstacle;   //障碍物坐标
@@ -20,11 +20,16 @@ var map=[];     //运动轨迹
 
 var storage=window.localStorage;
 storage['1'];
+storage['2'];
 
 x=x*8;
 y=y*8;
 
-//x=500;
+if(storage['1']==null)
+   storage['1']=0;
+if(storage['2']==null)
+   storage['2']=500;
+
 function move_snake(){
     switch(direction){
         case 1: y=y-size;break;
@@ -33,17 +38,17 @@ function move_snake(){
         case 4: x=x+size;break;
     }
     if(x>408 || x<0 || y<0 || y>408){
-        if((1000/time)>storage['1']){
-            storage['1']=(1000/time).toFixed(2);
+        if((1000/storage['2'])>storage['1']){
+            storage['1']=(1000/storage['2']).toFixed(2);
         }
-        alert("GameOver!碰壁了!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+        alert("GameOver!碰壁了!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s'+storage['2']);
         window.location.reload();
     }
    for(var i=0;i<map.length;i++){
        if(map[i].x==x&&map[i].y==y){
-            if((1000/time)>storage['1'])
-             storage['1']=(1000/time);
-            alert("GameOver!撞到自己!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+            if((1000/storage['2'])>storage['1'])
+             storage['1']=(1000/storage['2']);
+            alert("GameOver!撞到自己!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
             window.location.reload();
        }
    }
@@ -55,6 +60,7 @@ function move_snake(){
    cxt.fillStyle = "#000000";
    cxt.strokeStyle = "#000000";
    cxt.fillRect(x, y, size, size);
+
    
    up.addEventListener("click", function() {
     direction=1;});
@@ -64,19 +70,23 @@ function move_snake(){
     direction=3;});
    right.addEventListener("click", function() {
     direction=4;});
+    //level提高按钮
+  
 
    if((food*8)==x&&(food*8)==y){
        randomfood();
-       time=time-5;
        length++;
    }
    if(Math.abs(obstacle*8-x)<24&&Math.abs(obstacle*8-y)<24){
        randomobstacle();
-       alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/time).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
+       alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
        window.location.reload();
    }
 
 }
+ buttonA.addEventListener("click", function() {  
+    storage['2']=storage['2']-20;
+    window.location.reload() ;});
 function randomfood(){
     food=Math.ceil(Math.random()*50);
     cxt.fillStyle = "#000000";
@@ -90,4 +100,4 @@ function randomobstacle(){
 }
 randomfood();
 randomobstacle();
-interval = window.setInterval(move_snake, time); 
+interval = window.setInterval(move_snake,storage['2']); 
