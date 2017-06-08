@@ -10,10 +10,11 @@ var t = 20; //蛇身长
 var map = []; //记录蛇运行路径 
 var size = 8; //蛇身单元大小 
 var x = y = 8;
-var direction = 4;
-var food_state = false;
+var direction = 4; 
+var food_state = false; //食物类型
 var total_time = 60; //倒计时
-
+var total_score = 10; //总分
+var score = 0; //得分
 
 
 interval = window.setInterval(set_game_speed, time); // 移动蛇 
@@ -35,9 +36,17 @@ function set_game_speed(){ // 移动蛇
             window.location.reload(); 
         } 
     } 
-    if(total_time<0){
+    if(total_time<0 && score<total_score){
         alert("时间到了，你输了！");
         window.location.reload();
+    }
+    if(score>=total_score){
+        alert("你赢了，即将进入下一关！");
+        score = 0;
+        t = 20;
+        total_score = total_score + 20;
+        if(total_time>=0)
+            total_time = 60 + total_time;
     }
     if (map.length>t) { //保持蛇身长度 
         var cl = map.shift(); //删除数组第一项，并且返回原元素 
@@ -48,7 +57,11 @@ function set_game_speed(){ // 移动蛇
     cxt.strokeStyle = "#006699";//边框颜色 
     cxt.fillRect(x, y, size, size);//绘制矩形 
 
-    if((a*8)==x&&(a*8)==y){
+    if((a*8)==x&&(a*8)==y){ //吃食物
+        if(food_state)
+            score = score + 5;
+        else
+            score = score + 1;
         rand_frog();
         t++;
     }
@@ -66,18 +79,20 @@ function rand_frog(){ //随机出现食物
         cxt.strokeStyle = "#FF0000";
         cxt.fillRect(a*8,a*8,size,size);
         food_state = true;
+        //total_time = total_time + 5;
     }
     else{
         cxt.fillStyle = "#000000";
         cxt.strokeStyle = "#000000";
         cxt.fillRect(a*8,a*8,size,size);
+        food_state = false;
     }
 }
 rand_frog();
 
 function timeout(){
-    document.getElementById("total_time").innerHTML = "时间为" + total_time + "s";
-    total_time = total_time-1;
+    document.getElementById("total_time").innerHTML = "时间为" + total_time + "s," + "当前得分：" + score + "，总分：" + total_score;
+    total_time = total_time - 1;
     setTimeout("timeout();",1000);
 }
 timeout();
