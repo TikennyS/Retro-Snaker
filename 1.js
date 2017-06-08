@@ -15,6 +15,7 @@ var food_state = false;
 var total_time = 60; //倒计时
 
 
+
 interval = window.setInterval(set_game_speed, time); // 移动蛇 
 
 function set_game_speed(){ // 移动蛇 
