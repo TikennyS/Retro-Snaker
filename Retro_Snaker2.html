@@ -1,37 +1,71 @@
 <!DOCTYPE HTML> 
 <html> 
-<head lang="en">
-  <meta charset="UTF-8">
-  <title></title>
-  <style type="text/css">
-    .container{
-      margin:0 auto;
-      width:400px;
+  <head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+      .container{
+        margin:0 auto;
+        width:500px;
+      }
+      .reset{
+        margin:0 auto;
+        width:500px;
+      }
+      .button_up{
+        position: absolute;
+        left: 80px;
+        top: 200px;
+      }
+      .button_up,.button_left,.button_down,.button_right {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 8px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
     }
-    #scene{
-      border:1px solid black;
+      .button_a,.button_b {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 8px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
     }
-  </style>
-</head>
-<body>
-<div class="container">
-<canvas id="myCanvas" width="408" height="408" style="border:1px solid #c3c3c3;" ></canvas> 
-</div>
-<button id="1">上
-</button>
-<button id="2">下
-</button>
-<button id="3">左
-</button>
-<button id="4">右
-</button>
-<button id="5">+
-</button>
-<button id="6">-
-</button>
-<button id="7">reset
-</button>
-<script src="2.js"> 
-</script> 
-</body> 
+     .button_reset {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 8px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+    #myCanvas{cursor:pointer;background:#fff;border:6px #333333 solid;}
+    html {color:#000;background:#222;margin:0px;}
+    </style>
+  </head>
+  <body>
+    <div id="total_time" style="color:white"></div>
+    <div class="container">
+        <canvas id="myCanvas" width="408" height="408"  ></canvas>
+    </div>
+    <div>
+        <button id="1" class="button_up">上</button>
+        <button id="2" class="button_left" style="position: absolute;top: 250px; left:80px">下</button>
+        <button id="3" class="button_down" style="position: absolute;top: 250px;">左</button>
+        <button id="4" class="button_right" style="position: absolute;top: 250px; left:155px">右</button>
+        <button id="5" class="button_a" style="position: absolute;top: 250px; right:155px">A</button>
+        <button id="6" class="button_b" style="position: absolute;top: 250px; right:80px">B</button>
+        <button id="7" class="button_reset" style="position: absolute;top: 500px; right:704px;">reset</button>
+        
+    </div>
+    <script src="2.js"></script> 
+  </body> 
 </html> 
