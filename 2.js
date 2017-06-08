@@ -6,12 +6,19 @@ var down=document.getElementById("2")
 var left=document.getElementById("3")
 var right=document.getElementById("4")
 var buttonA=document.getElementById("5")
+var buttonB=document.getElementById("6")
+var buttonreset=document.getElementById("7")
 
 var x=Math.ceil(Math.random()*30);
 var y=Math.ceil(Math.random()*40);
 
-var food;       //食物坐标
-var obstacle;   //障碍物坐标
+var foodx;       //食物坐标
+var foody;
+
+var obstaclex;   //障碍物坐标
+var obstacley;
+var obstaclewidth;
+var obstacleheight;
 
 var size=8;
 var length=10;  //初始长度
@@ -41,7 +48,7 @@ function move_snake(){
         if((1000/storage['2'])>storage['1']){
             storage['1']=(1000/storage['2']).toFixed(2);
         }
-        alert("GameOver!碰壁了!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s'+storage['2']);
+        alert("GameOver!碰壁了!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
         window.location.reload();
     }
    for(var i=0;i<map.length;i++){
@@ -70,34 +77,55 @@ function move_snake(){
     direction=3;});
    right.addEventListener("click", function() {
     direction=4;});
-    //level提高按钮
   
 
-   if((food*8)==x&&(food*8)==y){
+   if((foodx*8)==x&&(foody*8)==y){
        randomfood();
        length++;
    }
-   if(Math.abs(obstacle*8-x)<24&&Math.abs(obstacle*8-y)<24){
-       randomobstacle();
+   if(Math.abs(obstaclex*8-x)<24&&Math.abs(obstacley*8-y)<24){
        alert("GameOver!撞到障碍物了!"+"当前速度："+(1000/storage['2']).toFixed(2)+"/s"+"\n"+"最高速:"+storage['1']+'/s');
        window.location.reload();
    }
-
 }
  buttonA.addEventListener("click", function() {  
-    storage['2']=storage['2']-20;
+    storage['2']=parseInt(storage['2'])-20;
+    if(parseInt(storage['2'])<20){
+    alert("已是最高难度，恭喜");
+    storage['2']=500;}
+    window.location.reload();;});
+ buttonB.addEventListener("click", function() {  
+    storage['2']=parseInt(storage['2'])+20;
+    if(parseInt(storage['2'])>500){
+    alert("已是最低难度");
+    storage['2']=500;}
+    window.location.reload();});
+ buttonreset.addEventListener("click", function() {  
+    storage['2']=500;
     window.location.reload() ;});
+
 function randomfood(){
-    food=Math.ceil(Math.random()*50);
+    foodx=Math.ceil(Math.random()*50);
+    foody=Math.ceil(Math.random()*50);
     cxt.fillStyle = "#000000";
     cxt.strokeStyle = "#000000";
-    cxt.fillRect(food*8,food*8,8,8);
+    cxt.fillRect(foodx*8,foody*8,8,8);
 }
 function randomobstacle(){
-    obstacle=Math.ceil(Math.random()*50);
+    console.log(obstaclex);
+    cxt.clearRect(obstaclex*8-1,obstacley*8-1,obstaclewidth+2,obstacleheight+2);
+    obstaclex=Math.ceil(Math.random()*50);
+    obstacley=Math.ceil(Math.random()*50);
+    obstaclewidth=Math.ceil(Math.random()*150);
+    obstacleheight=Math.ceil(Math.random()*150);
+
+    if(obstaclewidth<=16)
+       obstaclewidth=obstaclewidth*8;
+    if(obstacleheight<=16)
+       obstacleheight=obstacleheight*8;
     cxt.strokeStyle = "#000000";
-    cxt.strokeRect(obstacle*8,obstacle*8,24,24);
+    cxt.strokeRect(obstaclex*8,obstacley*8,obstaclewidth,obstacleheight);
 }
 randomfood();
-randomobstacle();
-interval = window.setInterval(move_snake,storage['2']); 
+window.setInterval(randomobstacle,5*storage['2']); 
+window.setInterval(move_snake,storage['2']); 
