@@ -28,6 +28,7 @@ var map=[];     //运动轨迹
 var storage=window.localStorage;
 storage['1'];
 storage['2'];
+storage['3'];
 
 x=x*8;
 y=y*8;
@@ -36,6 +37,8 @@ if(storage['1']==null)
    storage['1']=0;
 if(storage['2']==null)
    storage['2']=500;
+if(storage['3']==null||storage['3']<1||storage['3']>25)
+   storage['3']=1;
 
 function move_snake(){
     switch(direction){
@@ -97,18 +100,21 @@ function move_snake(){
 }
  buttonA.addEventListener("click", function() {  
     storage['2']=parseInt(storage['2'])-20;
+    storage['3']=parseInt(storage['3'])+1;
     if(parseInt(storage['2'])<20){
     alert("已是最高难度，恭喜");
     storage['2']=500;}
     window.location.reload();;});
  buttonB.addEventListener("click", function() {  
     storage['2']=parseInt(storage['2'])+20;
+    storage['3']=parseInt(storage['3'])-1;
     if(parseInt(storage['2'])>500){
     alert("已是最低难度");
     storage['2']=500;}
     window.location.reload();});
  buttonreset.addEventListener("click", function() {  
     storage['2']=500;
+    storage['3']=1;
     window.location.reload() ;});
 
 function randomfood(){
@@ -133,7 +139,10 @@ function randomobstacle(){
     cxt.strokeStyle = "#000000";
     cxt.strokeRect(obstaclex*8,obstacley*8,obstaclewidth,obstacleheight);
 }
-
+function timeout(){
+    document.getElementById("level").innerHTML = "当前等级" + storage['3'];
+}
 randomfood();
+timeout();
 window.setInterval(randomobstacle,5*storage['2']); 
 window.setInterval(move_snake,storage['2']); 
