@@ -67,7 +67,14 @@ function move_snake(){
    cxt.fillStyle = "#000000";
    cxt.strokeStyle = "#000000";
    cxt.fillRect(x, y, size, size);
-
+   
+   document.onkeydown = function(e) { 
+   var code = e.keyCode; 
+   switch(code){ 
+   case 38 : direction = 1;break;
+   case 40 : direction = 2;break; 
+   case 37 : direction = 3;break;
+   case 39 : direction = 4;break;}}
    
    up.addEventListener("click", function() {
     direction=1;});
@@ -77,7 +84,7 @@ function move_snake(){
     direction=3;});
    right.addEventListener("click", function() {
     direction=4;});
-  
+
 
    if((foodx*8)==x&&(foody*8)==y){
        randomfood();
@@ -126,6 +133,7 @@ function randomobstacle(){
     cxt.strokeStyle = "#000000";
     cxt.strokeRect(obstaclex*8,obstacley*8,obstaclewidth,obstacleheight);
 }
+
 randomfood();
 window.setInterval(randomobstacle,5*storage['2']); 
 window.setInterval(move_snake,storage['2']); 
