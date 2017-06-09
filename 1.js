@@ -15,6 +15,10 @@ var food_state = false; //食物类型
 var total_time = 60; //倒计时
 var total_score = 10; //总分
 var score = 0; //得分
+var highest_mark = 0; //最短用时
+
+if(window.localStorage.getItem("highest_mark")==null)
+    window.localStorage.setItem("highest_mark",180);
 
 
 interval = window.setInterval(set_game_speed, time); // 移动蛇 
@@ -41,7 +45,16 @@ function set_game_speed(){ // 移动蛇
         window.location.reload();
     }
     if(score>=total_score){
-        alert("你赢了，即将进入下一关！");
+        if(total_score==50){
+            highest_mark = 180 - total_time;
+            if(highest_mark<parseInt(window.localStorage.getItem("highest_mark")))
+                window.localStorage.setItem("highest_mark",highest_mark);
+            alert("真厉害，祝贺你已通关！最短用时：" + highest_mark + "秒");
+            window.location.reload();
+        }
+        else{
+            alert("你赢了，即将进入下一关！");
+        }
         score = 0;
         t = 20;
         total_score = total_score + 20;
@@ -57,7 +70,7 @@ function set_game_speed(){ // 移动蛇
     cxt.strokeStyle = "#006699";//边框颜色 
     cxt.fillRect(x, y, size, size);//绘制矩形 
 
-    if((a*8)==x&&(a*8)==y){ //吃食物
+    if((a*8)==x && (b*8)==y){ //吃食物
         if(food_state)
             score = score + 5;
         else
@@ -74,17 +87,18 @@ function set_game_speed(){ // 移动蛇
 
 function rand_frog(){ //随机出现食物
     a = Math.ceil(Math.random()*50);
+    b = Math.ceil(Math.random()*50);
     if(a%3==0){
         cxt.fillStyle = "#FF0000";
         cxt.strokeStyle = "#FF0000";
-        cxt.fillRect(a*8,a*8,size,size);
+        cxt.fillRect(a*8,b*8,size,size);
         food_state = true;
         //total_time = total_time + 5;
     }
     else{
         cxt.fillStyle = "#000000";
         cxt.strokeStyle = "#000000";
-        cxt.fillRect(a*8,a*8,size,size);
+        cxt.fillRect(a*8,b*8,size,size);
         food_state = false;
     }
 }
@@ -92,6 +106,10 @@ rand_frog();
 
 function timeout(){
     document.getElementById("total_time").innerHTML = "时间为" + total_time + "s," + "当前得分：" + score + "，总分：" + total_score;
+    if(highest_mark==0)
+        document.getElementById("highest_mark").innerHTML = "最短用时：" ;
+    else
+        document.getElementById("highest_mark").innerHTML = "最短用时：" + highest_mark + "秒";
     total_time = total_time - 1;
     setTimeout("timeout();",1000);
 }
