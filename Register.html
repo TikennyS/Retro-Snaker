@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>  
+    body{  
+    margin-left:auto;  
+    margin-right:auto; 
+    margin-TOP:100PX; 
+    width:20em;  
+    }
+    html {color:#000;background:#222;margin:0px;}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+</head>
+<body>
+        <!--下面是用户名输入框-->
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+        <input id="userName" type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <!--下面是密码输入框-->
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+        <input id="passWord" type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon1">
+    </div>
+    <br>
+    <!--下面是登陆按钮,包括颜色控制-->
+    <button type="button" style="width:280px;" class="btn btn-default" onclick="savepassword()">注 册</button>
+</body>
+<script>
+    function savepassword(){
+        if(document.getElementById("userName").value=="")
+            alert("用户名不能为空！");
+        else{
+            if(document.getElementById("passWord").value=="")
+                alert("密码不能为空！");
+            else{
+                window.open("Log_In.html");
+                localStorage.setItem("username",document.getElementById("userName").value);
+                localStorage.setItem("passWord",document.getElementById("passWord").value);
+                localStorage.setItem("state","0");
+            }
+        }
+    }
+</script>
+</html>
